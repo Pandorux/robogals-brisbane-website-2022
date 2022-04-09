@@ -1,6 +1,6 @@
 const express = require("express");
 // const cors = require('cors');
-// const mongoose = require("mongoose");
+const dbo = require('./db/conn');
 const bodyParser = require('body-parser');
 
 // const isDev = process.env.NODE_ENV !== "production";
@@ -8,10 +8,6 @@ const PORT = process.env.PORT || 8080;
 
 // Configuration
 // ================================================================================================
-
-// Set up Mongoose
-// mongoose.connect(isDev ? config.db_dev : config.db);
-// mongoose.Promise = global.Promise;
 
 const app = express();
 
@@ -29,6 +25,13 @@ app.get("/", (req, res) => {
 app.post("/post", (req, res) => {
     console.log("Connected to React");
     res.redirect("/");
+});
+
+dbo.connectToServer(function (err) {
+    if (err) {
+        console.error(err);
+        process.exit();
+    }
 });
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
