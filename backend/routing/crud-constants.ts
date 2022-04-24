@@ -4,3 +4,5 @@ export class CRUDConstants {
     public static readonly update: string = "update";
     public static readonly delete: string = "delete";
 }
+
+module.exports = { CRUDConstants }

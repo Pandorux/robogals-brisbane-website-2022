@@ -1,8 +1,7 @@
-import { CRUDConstants } from "./crud-constants";
-
+import { CRUDConstants } from "./crud-constants.ts";
 export class RouteBuilder {
     private route: string;
-    private _isFullyQualified: boolean;
+    private _isFullyQualified: boolean = false;
 
     public get isFullyQualified(): boolean {
         return this._isFullyQualified;
@@ -17,35 +16,39 @@ export class RouteBuilder {
         this.isFullyQualified = isFullyQualified;
     }
 
-    Append(str: string): RouteBuilder {
+    public Prepend(str: string = ''): RouteBuilder {
+        return new RouteBuilder(`${str}/${this.route}`, this.isFullyQualified);
+    }
+
+    public Append(str: string): RouteBuilder {
         return new RouteBuilder(`${this.route}/${str}`, this.isFullyQualified);
     }
 
-    AppendId(): RouteBuilder {
+    public AppendId(): RouteBuilder {
         return new RouteBuilder(`${this.route}/:id`, this.isFullyQualified);
     }
 
-    AppendCreate(): RouteBuilder {
+    public AppendCreate(): RouteBuilder {
         return new RouteBuilder(`${this.route}/${CRUDConstants.create}`, this.isFullyQualified);
     }
 
-    AppendRead(): RouteBuilder {
+    public AppendRead(): RouteBuilder {
         return new RouteBuilder(`${this.route}/${CRUDConstants.read}`, this.isFullyQualified);
     }
 
-    AppendUpdate(): RouteBuilder {
+    public AppendUpdate(): RouteBuilder {
         return new RouteBuilder(`${this.route}/${CRUDConstants.update}`, this.isFullyQualified);
     }
 
-    AppendDelete(): RouteBuilder {
+    public AppendDelete(): RouteBuilder {
         return new RouteBuilder(`${this.route}/${CRUDConstants.delete}`, this.isFullyQualified);
     }
 
-    ToString(): string {
+    public ToString(): string {
         return this.route;
     }
 
-    FullyQualify(): RouteBuilder {
+    public FullyQualify(): RouteBuilder {
 
         if (!this.isFullyQualified) {
             this.isFullyQualified = true;
@@ -55,3 +58,5 @@ export class RouteBuilder {
         return new RouteBuilder(this.route, this.isFullyQualified);
     }
 }
+
+module.exports = { RouteBuilder };

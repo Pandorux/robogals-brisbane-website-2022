@@ -11,12 +11,19 @@ import OurWorkshops from "../schools/our-workshops/our-workshops";
 import UpcomingWorkshops from "../schools/upcoming-workshops/upcoming-workshops";
 import GettingInvolved from "../volunteers/getting-involved/getting-involved";
 import VolunteerEvents from "../volunteers/volunteer-events/volunteer-events";
+const axios = require('axios');
 
 type RouterProps = {
   
 };
 
 class Router extends Component<RouterProps, any> {
+  
+  async testDeliveryTypeRoute() {
+    const res = await axios.get("http://localhost:3000/delivery-type/get/", { id: 2 });
+    console.log('Res', res);
+  }
+
   public render() {
     return (
       <BrowserRouter>
@@ -49,6 +56,12 @@ class Router extends Component<RouterProps, any> {
             <Route path="contact-us" element={<ContactUs />} />
           </Route>
         </Routes>
+
+        <div>
+          <div className="d-grid gap-2">
+            <button type="button" className="btn btn-primary" onClick={() => this.testDeliveryTypeRoute()}>DB Test</button>
+          </div>
+        </div>
 
         <Footer />
       </BrowserRouter>
