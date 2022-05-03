@@ -1,30 +1,22 @@
 
+const schoolTypeRoutes = require("express").Router();
+const blah =  require("../database/connection");
 
-import * as express from "express";
-import * as dbo from "../database/connection.js";
+schoolTypeRoutes.get('/:id', function (req, res) {
+    const dbConnect = blah.getDb();
 
-const schoolTypeRoutes = express.Router();
-import { CollectionConstants } from "../routing/collection-constants.js";
-import { Routes } from "../routing/routes.js";
-
-schoolTypeRoutes.route(Routes.schoolType.Prepend().AppendRead().ToString()).get(async function (req, res) {
-    // TODO: Implement School Type Get Method
-    throw new Error("Not Implemented");
-});
-
-schoolTypeRoutes.route(Routes.schoolType.Prepend().AppendCreate().ToString()).post(function (req, res) {
-    // TODO: Implement School Type Get Method
-    throw new Error("Not Implemented");
-});
-
-schoolTypeRoutes.route(Routes.schoolType.Prepend().AppendUpdate().ToString()).post(function (req, res) {
-    // TODO: Implement School Type Get Method
-    throw new Error("Not Implemented");
-});
-
-schoolTypeRoutes.route(Routes.schoolType.Prepend().AppendDelete().ToString()).delete((req, res) => {
-    // TODO: Implement School Type Get Method
-    throw new Error("Not Implemented");
+    dbConnect
+        .collection('school-type')
+        .findOne({ id: Number(req.params.id) }, function (err, result) {
+            console.log('result', result);
+            if (err) {
+                res.status(400).send("Error Finding SchoolType Document!");
+            } else {
+                console.log('Found SchoolType Document', result.id);
+                console.log('req body info', result.body);
+                res.json(result);
+            }
+        });
 });
 
 module.exports = schoolTypeRoutes;

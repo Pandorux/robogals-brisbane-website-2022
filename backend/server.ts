@@ -41,15 +41,15 @@ dbo.connectToServer(function (err) {
 });
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
-console.log("Routes: ", app.routes);
-console.log("API Routes", apiRouter);
+// console.log("Routes: ", app.routes);
+// console.log("API Routes", apiRouter);
 
-apiRouter.stack.forEach(function(r){
-    if (r.route && r.route.path){
-        console.log('API Route: ', r.route)
+// apiRouter.stack.forEach(function(r){
+//     if (r.route && r.route.path){
+//         console.log('API Route: ', r.route)
 
-        // r.routes.forEach(function(c) {
-        //     console.log(`Route ${r.route.path}`, c.route.path)
-        // })
-    }
-})
+//         // r.routes.forEach(function(c) {
+//         //     console.log(`Route ${r.route.path}`, c.route.path)
+//         // })
+//     }
+// })

@@ -1,30 +1,22 @@
 
+const schoolRoutes = require("express").Router();
+const blah =  require("../database/connection");
 
-import * as express from "express";
-import * as dbo from "../database/connection.js";
+schoolRoutes.get('/:id', function (req, res) {
+    const dbConnect = blah.getDb();
 
-const schoolRoutes = express.Router();
-import { CollectionConstants } from "../routing/collection-constants.js";
-import { Routes } from "../routing/routes.js";
-
-schoolRoutes.route(Routes.school.Prepend().AppendRead().ToString()).get(async function (req, res) {
-    // TODO: Implement School Get Method
-    throw new Error("Not Implemented");
-});
-
-schoolRoutes.route(Routes.school.Prepend().AppendCreate().ToString()).post(function (req, res) {
-    // TODO: Implement School Get Method
-    throw new Error("Not Implemented");
-});
-
-schoolRoutes.route(Routes.school.Prepend().AppendUpdate().ToString()).post(function (req, res) {
-    // TODO: Implement School Get Method
-    throw new Error("Not Implemented");
-});
-
-schoolRoutes.route(Routes.school.Prepend().AppendDelete().ToString()).delete((req, res) => {
-    // TODO: Implement School Get Method
-    throw new Error("Not Implemented");
+    dbConnect
+        .collection('school')
+        .findOne({ id: Number(req.params.id) }, function (err, result) {
+            console.log('result', result);
+            if (err) {
+                res.status(400).send("Error Finding School Document!");
+            } else {
+                console.log('Found School Document', result.id);
+                console.log('req body info', result.body);
+                res.json(result);
+            }
+        });
 });
 
 module.exports = schoolRoutes;
